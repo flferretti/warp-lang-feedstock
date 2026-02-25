@@ -52,8 +52,6 @@ requirements:
   run:
     - if: cuda_compiler_version != "None"
       then: __cuda
-    - if: unix
-      then: jax
     - python
 
 tests:
