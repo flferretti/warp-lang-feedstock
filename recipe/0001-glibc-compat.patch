@@ -1,4 +1,8 @@
-Subject: [PATCH] Resolve newer LLVM glibc references on older conda-forge sysroots
+From 08d9c969f4c4d4bc6d6c00f29848e4edfd27f3d7 Mon Sep 17 00:00:00 2001
+From: "copilot-swe-agent[bot]" <198982749+Copilot@users.noreply.github.com>
+Date: Tue, 20 Oct 2026 12:50:50 +0000
+Subject: [PATCH] Resolve newer LLVM glibc references on older conda-forge
+ sysroots
 
 The prebuilt LLVM archives reference mallinfo2 (glibc 2.33) and
 __libc_single_threaded (glibc 2.32). Replace the earlier
@@ -8,8 +12,12 @@ cannot load on the older glibc baseline.
 
 Keep undefined-symbol validation enabled. Newer sysroots use their native
 glibc definitions, and non-glibc platforms are unaffected.
+---
+ warp/native/crt.cpp | 47 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
 diff --git a/warp/native/crt.cpp b/warp/native/crt.cpp
+index 4b39457..43be11e 100644
 --- a/warp/native/crt.cpp
 +++ b/warp/native/crt.cpp
 @@ -7,6 +7,53 @@
@@ -66,3 +74,6 @@ diff --git a/warp/native/crt.cpp b/warp/native/crt.cpp
  #if defined(_MSC_VER)
  #include <intrin.h>  // for __debugbreak()
  #elif defined(__has_builtin)
+-- 
+Git
+
